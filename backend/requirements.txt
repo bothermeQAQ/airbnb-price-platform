@@ -1,16 +1,14 @@
 # --- web framework ---
-fastapi>=0.115,<1.0
-uvicorn>=0.30,<1.0
-pydantic>=2.7
+fastapi==0.136.1
+uvicorn==0.47.0
+pydantic==2.13.4
 
 # --- inference stack ---
-# Loaded by saved_models/inference.py to unpickle and run the base models.
-# When the local venv is created with --system-site-packages these resolve to
-# the already-installed system packages; for a clean/Render install pip
-# installs them from scratch.
-numpy>=1.26
-pandas>=2.0
-scikit-learn>=1.4
-lightgbm>=4.3
-xgboost>=2.1
-catboost>=1.2
+# Pinned to the exact versions the model artifacts were trained/pickled with,
+# so the saved .pkl files unpickle reliably on a fresh deploy.
+numpy==2.4.2
+pandas==3.0.0
+scikit-learn==1.8.0
+lightgbm==4.6.0
+xgboost==3.2.0
+catboost==1.2.10

@@ -93,7 +93,10 @@ python3 build_market_data.py /path/to/train.csv
 
 ## Deploy (Render)
 
-`render.yaml` (repo root) is a Render Blueprint. Note: `base_models.pkl`
-(~162 MB) exceeds GitHub's 100 MB file limit and is git-ignored — track it with
-Git LFS or download it in the build step before deploying. See the comments in
-`render.yaml`. The free instance (512 MB RAM) is tight for the full ensemble.
+`render.yaml` (repo root) is a **self-contained** Render Blueprint: the 162 MB
+`base_models.pkl` exceeds GitHub's 100 MB repo limit, so it is published as a
+GitHub Release asset (`model-v1`) and the `buildCommand` downloads it into
+`saved_models/` automatically — no Git LFS, no manual steps.
+
+Deploy: Render dashboard → **New → Blueprint** → connect this repo. The free
+instance (512 MB RAM) is tight for the full ensemble — upgrade if it OOMs.

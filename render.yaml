@@ -1,17 +1,15 @@
 # Render Blueprint — deploys the FastAPI backend as a web service.
 # Docs: https://render.com/docs/blueprint-spec
 #
-# ── Before deploying ──────────────────────────────────────────────────────
-# saved_models/base_models.pkl is ~162 MB and exceeds GitHub's 100 MB file
-# limit, so it is git-ignored. To deploy to Render you must make the model
-# available to the build, e.g.:
-#   (a) track it with Git LFS:  git lfs track "saved_models/base_models.pkl"
-#   (b) host it externally and download it in buildCommand, e.g.:
-#       buildCommand: pip install -r requirements.txt &&
-#         curl -L "$MODEL_URL" -o ../saved_models/base_models.pkl
-# The free instance has 512 MB RAM — loading the full ensemble is tight;
-# upgrade to a Starter instance if the service runs out of memory.
-# ──────────────────────────────────────────────────────────────────────────
+# The 162 MB model file (saved_models/base_models.pkl) exceeds GitHub's 100 MB
+# repo limit, so it is git-ignored and instead published as a GitHub Release
+# asset. The buildCommand below downloads it into saved_models/ at build time,
+# so a Blueprint deploy from this repo is fully self-contained — no Git LFS
+# and no manual steps required.
+#
+# To deploy: Render dashboard → New → Blueprint → connect this repo.
+# Note: the free instance has 512 MB RAM — loading the full ensemble is tight;
+# upgrade to a paid instance if the service runs out of memory.
 
 services:
   - type: web
@@ -20,7 +18,10 @@ services:
     plan: free
     region: oregon
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      curl -fSL -o ../saved_models/base_models.pkl
+      https://github.com/bothermeQAQ/airbnb-price-platform/releases/download/model-v1/base_models.pkl
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     autoDeploy: true

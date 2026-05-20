@@ -136,9 +136,10 @@ npm run build        # static export → ./out
 
 - **Frontend** — Vercel (`vercel --prod`). Set `NEXT_PUBLIC_API_URL` to the
   deployed backend URL.
-- **Backend** — `render.yaml` is a Render Blueprint. Note: `base_models.pkl`
-  exceeds GitHub's 100 MB limit, so it must be supplied via Git LFS or a
-  build-time download — see `render.yaml` and `backend/README.md`.
+- **Backend** — `render.yaml` is a self-contained Render Blueprint. The 162 MB
+  `base_models.pkl` is published as a GitHub Release asset and downloaded
+  automatically at build time. Deploy via the Render dashboard → New →
+  Blueprint → this repo.
 
 ## Repository layout
 
