@@ -1,10 +1,17 @@
 // ---------------------------------------------------------------------------
-// Static data layer for the Airbnb Price Intelligence Platform.
+// Data layer for the Airbnb Price Intelligence Platform.
 // Project facts are sourced from TECHNICAL_SUMMARY.md (Kaggle MAE = 36.18291).
-// Neighborhood / market figures are realistic illustrative values for the demo.
+// Neighborhood / borough / room-type / distribution figures are REAL — computed
+// from the 33,522-row competition training set by backend/build_market_data.py.
 // ---------------------------------------------------------------------------
 
+import market from '@/backend/market_data.json';
+
 export type Borough = 'Manhattan' | 'Brooklyn' | 'Queens' | 'Bronx' | 'Staten Island';
+
+// Real overall price statistics from train.csv (price > 0).
+export const MARKET_OVERALL = market.overall;
+export const MARKET_SOURCE = market.generated_from;
 
 // --- Headline project numbers ------------------------------------------------
 
@@ -50,43 +57,22 @@ export const MAE_TRAJECTORY: MaePoint[] = [
 export interface Neighborhood {
   name: string;
   borough: Borough;
-  median: number; // entire-home median nightly price (USD)
+  median: number; // median nightly price (USD), from train.csv
+  mean?: number;
+  count?: number; // number of training listings
+  zipcode?: string; // modal 5-digit zipcode
 }
 
-export const NEIGHBORHOODS: Neighborhood[] = [
-  // Manhattan
-  { name: 'Tribeca', borough: 'Manhattan', median: 352 },
-  { name: 'SoHo', borough: 'Manhattan', median: 324 },
-  { name: 'West Village', borough: 'Manhattan', median: 286 },
-  { name: 'Midtown', borough: 'Manhattan', median: 268 },
-  { name: 'Flatiron', borough: 'Manhattan', median: 256 },
-  { name: 'Chelsea', borough: 'Manhattan', median: 234 },
-  { name: 'Greenwich Village', borough: 'Manhattan', median: 222 },
-  { name: 'Upper East Side', borough: 'Manhattan', median: 214 },
-  { name: 'East Village', borough: 'Manhattan', median: 198 },
-  { name: 'Harlem', borough: 'Manhattan', median: 132 },
-  // Brooklyn
-  { name: 'DUMBO', borough: 'Brooklyn', median: 206 },
-  { name: 'Park Slope', borough: 'Brooklyn', median: 182 },
-  { name: 'Williamsburg', borough: 'Brooklyn', median: 168 },
-  { name: 'Greenpoint', borough: 'Brooklyn', median: 154 },
-  { name: 'Cobble Hill', borough: 'Brooklyn', median: 176 },
-  { name: 'Bushwick', borough: 'Brooklyn', median: 116 },
-  { name: 'Bed-Stuy', borough: 'Brooklyn', median: 108 },
-  // Queens
-  { name: 'Long Island City', borough: 'Queens', median: 142 },
-  { name: 'Astoria', borough: 'Queens', median: 106 },
-  { name: 'Sunnyside', borough: 'Queens', median: 92 },
-  { name: 'Flushing', borough: 'Queens', median: 84 },
-  { name: 'Jackson Heights', borough: 'Queens', median: 78 },
-  // Bronx
-  { name: 'Riverdale', borough: 'Bronx', median: 102 },
-  { name: 'Mott Haven', borough: 'Bronx', median: 88 },
-  { name: 'Fordham', borough: 'Bronx', median: 72 },
-  // Staten Island
-  { name: 'St. George', borough: 'Staten Island', median: 96 },
-  { name: 'Stapleton', borough: 'Staten Island', median: 80 },
-];
+// Every neighborhood with >= 30 training listings — real medians, means,
+// listing counts and modal zipcodes computed from train.csv.
+export const NEIGHBORHOODS: Neighborhood[] = market.neighborhoods.map((n) => ({
+  name: n.name,
+  borough: n.borough as Borough,
+  median: n.median,
+  mean: n.mean,
+  count: n.count,
+  zipcode: n.zipcode ?? undefined,
+}));
 
 export const BOROUGHS: Borough[] = [
   'Manhattan',
@@ -96,20 +82,32 @@ export const BOROUGHS: Borough[] = [
   'Staten Island',
 ];
 
-// Borough-level average nightly price across all room types (illustrative).
+// Borough-level price stats — real averages across all room types (train.csv).
 export interface BoroughStat {
   borough: Borough;
   avgPrice: number;
+  median: number;
   listings: number;
   topNeighborhood: string;
 }
 
+function boroughStat(b: Borough): BoroughStat {
+  const s = (market.boroughs as Record<string, Omit<BoroughStat, 'borough'>>)[b];
+  return {
+    borough: b,
+    avgPrice: s.avgPrice,
+    median: s.median,
+    listings: s.listings,
+    topNeighborhood: s.topNeighborhood,
+  };
+}
+
 export const BOROUGH_STATS: Record<Borough, BoroughStat> = {
-  Manhattan: { borough: 'Manhattan', avgPrice: 196, listings: 16480, topNeighborhood: 'Tribeca' },
-  Brooklyn: { borough: 'Brooklyn', avgPrice: 132, listings: 14210, topNeighborhood: 'DUMBO' },
-  Queens: { borough: 'Queens', avgPrice: 94, listings: 4760, topNeighborhood: 'Long Island City' },
-  Bronx: { borough: 'Bronx', avgPrice: 76, listings: 1080, topNeighborhood: 'Riverdale' },
-  'Staten Island': { borough: 'Staten Island', avgPrice: 84, listings: 345, topNeighborhood: 'St. George' },
+  Manhattan: boroughStat('Manhattan'),
+  Brooklyn: boroughStat('Brooklyn'),
+  Queens: boroughStat('Queens'),
+  Bronx: boroughStat('Bronx'),
+  'Staten Island': boroughStat('Staten Island'),
 };
 
 // --- Property & room types ---------------------------------------------------
@@ -182,29 +180,16 @@ export interface RoomTypeStat {
   share: number;
 }
 
-export const ROOM_TYPE_STATS: RoomTypeStat[] = [
-  { type: 'Entire home / apt', avgPrice: 178, listings: 18420, share: 54.9 },
-  { type: 'Private room', avgPrice: 89, listings: 13910, share: 41.5 },
-  { type: 'Shared room', avgPrice: 63, listings: 1208, share: 3.6 },
-];
+// Real average price + listing share per room type (train.csv).
+export const ROOM_TYPE_STATS: RoomTypeStat[] = market.roomTypes;
 
-// Price distribution histogram — right-skewed (mean $145, median $109).
+// Real price distribution histogram — right-skewed (median $109, mean $145).
 export interface PriceBand {
   band: string;
   count: number;
 }
 
-export const PRICE_HISTOGRAM: PriceBand[] = [
-  { band: '$0–50', count: 4120 },
-  { band: '$50–100', count: 10840 },
-  { band: '$100–150', count: 8260 },
-  { band: '$150–200', count: 4710 },
-  { band: '$200–250', count: 2540 },
-  { band: '$250–300', count: 1320 },
-  { band: '$300–400', count: 980 },
-  { band: '$400–600', count: 510 },
-  { band: '$600+', count: 258 },
-];
+export const PRICE_HISTOGRAM: PriceBand[] = market.priceHistogram;
 
 export interface TopNeighborhood {
   name: string;
@@ -212,10 +197,17 @@ export interface TopNeighborhood {
   price: number;
 }
 
+// Top 10 priciest neighborhoods by real median (>= 80 listings for stability).
 export const TOP_NEIGHBORHOODS: TopNeighborhood[] = [...NEIGHBORHOODS]
+  .filter((n) => (n.count ?? 0) >= 80)
   .sort((a, b) => b.median - a.median)
   .slice(0, 10)
   .map((n) => ({ name: n.name, borough: n.borough, price: n.median }));
+
+// Most-listed neighborhoods — used for the dashboard heatmap grid.
+export const HEATMAP_NEIGHBORHOODS: Neighborhood[] = [...NEIGHBORHOODS]
+  .sort((a, b) => (b.count ?? 0) - (a.count ?? 0))
+  .slice(0, 28);
 
 // Per-tier OOF analysis (TECHNICAL_SUMMARY §8.2).
 export interface TierStat {

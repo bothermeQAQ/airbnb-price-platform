@@ -1,17 +1,17 @@
-import { NEIGHBORHOODS } from '@/lib/data';
+import { HEATMAP_NEIGHBORHOODS } from '@/lib/data';
 import { heatColor } from '@/lib/color';
 
-const MIN = 65;
-const MAX = 360;
+const MIN = 45;
+const MAX = 235;
 
-// Grid heatmap of every modeled neighborhood, sorted by median nightly price.
+// Grid heatmap of the most-listed neighborhoods, by real median nightly price.
 export function NeighborhoodHeatmap() {
-  const sorted = [...NEIGHBORHOODS].sort((a, b) => b.median - a.median);
+  const sorted = [...HEATMAP_NEIGHBORHOODS].sort((a, b) => b.median - a.median);
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {sorted.map((n) => {
-        const darkText = n.median > 230;
+        const darkText = n.median > 158;
         return (
           <div
             key={n.name}

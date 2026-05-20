@@ -7,3 +7,13 @@ next-env.d.ts
 .DS_Store
 .env*.local
 .vercel
+
+# python backend
+.venv/
+__pycache__/
+*.pyc
+catboost_info/
+
+# large model artifact — exceeds GitHub's 100 MB file limit.
+# Supply via Git LFS or a build-time download to deploy the backend.
+saved_models/base_models.pkl

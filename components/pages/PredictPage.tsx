@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DriversChart } from '@/components/charts/DriversChart';
 import {
-  ArrowRight,
   BoltIcon,
   CheckIcon,
   CpuIcon,
@@ -21,6 +20,7 @@ import {
   type AmenityId,
 } from '@/lib/data';
 import { predictPrice, type PredictInput, type Prediction } from '@/lib/predict';
+import { fetchPrediction, type PredictionSource } from '@/lib/api';
 
 const DEFAULT_INPUT: PredictInput = {
   neighborhood: 'Williamsburg',
@@ -40,17 +40,31 @@ const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
 export function PredictPage() {
   const [input, setInput] = useState<PredictInput>(DEFAULT_INPUT);
   const [result, setResult] = useState<Prediction>(() => predictPrice(DEFAULT_INPUT));
+  const [source, setSource] = useState<PredictionSource>('heuristic');
   const [analyzing, setAnalyzing] = useState(true);
   const [dirty, setDirty] = useState(false);
   const [runId, setRunId] = useState(0);
 
-  // Initial "inference" animation on mount.
-  useEffect(() => {
-    const t = setTimeout(() => setAnalyzing(false), 850);
-    return () => clearTimeout(t);
+  // Run a prediction against the real FastAPI model (falls back to the local
+  // heuristic if the backend is unreachable). A minimum dwell keeps the
+  // "analyzing" animation from flickering on a fast response.
+  const runWith = useCallback(async (current: PredictInput) => {
+    setAnalyzing(true);
+    const [{ prediction, source: src }] = await Promise.all([
+      fetchPrediction(current),
+      new Promise<void>((resolve) => setTimeout(resolve, 750)),
+    ]);
+    setResult(prediction);
+    setSource(src);
+    setRunId((n) => n + 1);
+    setDirty(false);
+    setAnalyzing(false);
   }, []);
 
-  const live = useMemo(() => predictPrice(input), [input]);
+  // Predict once on mount so the result panel is populated.
+  useEffect(() => {
+    runWith(DEFAULT_INPUT);
+  }, [runWith]);
 
   function set<K extends keyof PredictInput>(key: K, value: PredictInput[K]) {
     setInput((prev) => ({ ...prev, [key]: value }));
@@ -68,13 +82,7 @@ export function PredictPage() {
   }
 
   function run() {
-    setAnalyzing(true);
-    setTimeout(() => {
-      setResult(predictPrice(input));
-      setRunId((n) => n + 1);
-      setDirty(false);
-      setAnalyzing(false);
-    }, 850);
+    runWith(input);
   }
 
   return (
@@ -88,8 +96,8 @@ export function PredictPage() {
             Estimate a listing.
           </h1>
           <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-zinc-400">
-            Configure a NYC listing and get an instant nightly estimate, a confidence band
-            and a transparent breakdown of every price driver.
+            Configure a NYC listing and the real stacked-ensemble model returns a nightly
+            estimate, a confidence band and a transparent breakdown of every price driver.
           </p>
         </div>
       </section>
@@ -267,7 +275,7 @@ export function PredictPage() {
           <div className="lg:sticky lg:top-24 lg:self-start">
             <ResultPanel
               result={result}
-              live={live}
+              source={source}
               dirty={dirty}
               analyzing={analyzing}
               runId={runId}
@@ -482,15 +490,33 @@ function StepBtn({
 
 /* ------------------------------------------------------------- result panel */
 
+function SourceBadge({ source }: { source: PredictionSource }) {
+  const live = source === 'api';
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-medium ${
+        live
+          ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+          : 'border-zinc-600/40 bg-white/[0.03] text-zinc-400'
+      }`}
+    >
+      <span
+        className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-emerald-400' : 'bg-zinc-500'}`}
+      />
+      {live ? 'Live model' : 'Offline estimate'}
+    </span>
+  );
+}
+
 function ResultPanel({
   result,
-  live,
+  source,
   dirty,
   analyzing,
   runId,
 }: {
   result: Prediction;
-  live: Prediction;
+  source: PredictionSource;
   dirty: boolean;
   analyzing: boolean;
   runId: number;
@@ -509,8 +535,11 @@ function ResultPanel({
       <div className="h-1 w-full bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0" />
 
       <div className="p-6 sm:p-7">
-        <div className="flex items-center justify-between">
-          <span className="section-eyebrow">Estimated price</span>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="section-eyebrow">Estimated price</span>
+            <SourceBadge source={source} />
+          </div>
           <span className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold ${tierColor}`}>
             {result.tier} tier
           </span>
@@ -596,15 +625,16 @@ function ResultPanel({
           >
             <p className="flex items-center gap-2 px-6 py-3 text-xs text-amber-300/90">
               <BoltIcon size={13} />
-              Inputs changed — current estimate would be ${live.price}. Run again to update.
+              Inputs changed since the last run — run the model again to refresh.
             </p>
           </motion.div>
         )}
       </AnimatePresence>
 
       <p className="border-t border-white/[0.06] px-6 py-3.5 text-[11px] leading-relaxed text-zinc-600">
-        Live estimates use a transparent heuristic engine calibrated to the ensemble&apos;s
-        learned feature effects. The full 40-model pipeline runs offline.
+        {source === 'api'
+          ? 'Served by the real 12-model stacked ensemble (FastAPI backend) — feature pipeline, base models, Ridge stacker and residual correction. Price drivers are counterfactual contributions measured on the live model.'
+          : 'Backend offline — showing the local heuristic estimate. Start the FastAPI backend (see backend/README.md) to use the live ensemble.'}
       </p>
     </div>
   );
@@ -627,8 +657,8 @@ function Analyzing() {
           </span>
         </span>
         <div>
-          <p className="text-sm font-semibold text-white">Analyzing 40 models…</p>
-          <p className="font-mono text-xs text-zinc-500">Stacking · residual correction</p>
+          <p className="text-sm font-semibold text-white">Analyzing the model ensemble…</p>
+          <p className="font-mono text-xs text-zinc-500">12 base models · stacking · residual</p>
         </div>
       </div>
       <div className="mt-6 space-y-3">

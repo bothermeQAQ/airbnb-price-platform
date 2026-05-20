@@ -1,0 +1,893 @@
+{
+  "generated_from": "train.csv \u2014 33522 listings with price > 0",
+  "overall": {
+    "n": 33522,
+    "mean": 145,
+    "median": 109,
+    "p25": 69,
+    "p75": 175,
+    "p90": 267,
+    "max": 1999
+  },
+  "priceHistogram": [
+    {
+      "band": "$0\u201350",
+      "count": 3345
+    },
+    {
+      "band": "$50\u2013100",
+      "count": 11570
+    },
+    {
+      "band": "$100\u2013150",
+      "count": 6936
+    },
+    {
+      "band": "$150\u2013200",
+      "count": 5081
+    },
+    {
+      "band": "$200\u2013250",
+      "count": 2371
+    },
+    {
+      "band": "$250\u2013300",
+      "count": 1570
+    },
+    {
+      "band": "$300\u2013400",
+      "count": 1311
+    },
+    {
+      "band": "$400\u2013600",
+      "count": 811
+    },
+    {
+      "band": "$600+",
+      "count": 527
+    }
+  ],
+  "boroughs": {
+    "Bronx": {
+      "borough": "Bronx",
+      "avgPrice": 80,
+      "median": 65,
+      "listings": 652,
+      "topNeighborhood": "Mott Haven"
+    },
+    "Brooklyn": {
+      "borough": "Brooklyn",
+      "avgPrice": 118,
+      "median": 90,
+      "listings": 13544,
+      "topNeighborhood": "Carroll Gardens"
+    },
+    "Manhattan": {
+      "borough": "Manhattan",
+      "avgPrice": 185,
+      "median": 150,
+      "listings": 15441,
+      "topNeighborhood": "Tribeca"
+    },
+    "Queens": {
+      "borough": "Queens",
+      "avgPrice": 94,
+      "median": 75,
+      "listings": 3671,
+      "topNeighborhood": "Rockaway Beach"
+    },
+    "Staten Island": {
+      "borough": "Staten Island",
+      "avgPrice": 102,
+      "median": 70,
+      "listings": 214,
+      "topNeighborhood": "NA"
+    }
+  },
+  "neighborhoods": [
+    {
+      "name": "Williamsburg",
+      "borough": "Brooklyn",
+      "median": 105,
+      "mean": 142,
+      "count": 2756,
+      "zipcode": "11211"
+    },
+    {
+      "name": "Bedford-Stuyvesant",
+      "borough": "Brooklyn",
+      "median": 80,
+      "mean": 103,
+      "count": 2390,
+      "zipcode": "11221"
+    },
+    {
+      "name": "Harlem",
+      "borough": "Manhattan",
+      "median": 90,
+      "mean": 115,
+      "count": 1891,
+      "zipcode": "10031"
+    },
+    {
+      "name": "Bushwick",
+      "borough": "Brooklyn",
+      "median": 65,
+      "mean": 80,
+      "count": 1673,
+      "zipcode": "11237"
+    },
+    {
+      "name": "Upper West Side",
+      "borough": "Manhattan",
+      "median": 150,
+      "mean": 182,
+      "count": 1455,
+      "zipcode": "10025"
+    },
+    {
+      "name": "Hell's Kitchen",
+      "borough": "Manhattan",
+      "median": 165,
+      "mean": 199,
+      "count": 1423,
+      "zipcode": "10019"
+    },
+    {
+      "name": "East Village",
+      "borough": "Manhattan",
+      "median": 150,
+      "mean": 183,
+      "count": 1354,
+      "zipcode": "10009"
+    },
+    {
+      "name": "Upper East Side",
+      "borough": "Manhattan",
+      "median": 150,
+      "mean": 179,
+      "count": 1337,
+      "zipcode": "10028"
+    },
+    {
+      "name": "Midtown",
+      "borough": "Manhattan",
+      "median": 215,
+      "mean": 278,
+      "count": 1143,
+      "zipcode": "10022"
+    },
+    {
+      "name": "Crown Heights",
+      "borough": "Brooklyn",
+      "median": 80,
+      "mean": 101,
+      "count": 1057,
+      "zipcode": "11213"
+    },
+    {
+      "name": "Chelsea",
+      "borough": "Manhattan",
+      "median": 195,
+      "mean": 244,
+      "count": 789,
+      "zipcode": "10011"
+    },
+    {
+      "name": "Greenpoint",
+      "borough": "Brooklyn",
+      "median": 115,
+      "mean": 134,
+      "count": 781,
+      "zipcode": "11222"
+    },
+    {
+      "name": "East Harlem",
+      "borough": "Manhattan",
+      "median": 99,
+      "mean": 121,
+      "count": 778,
+      "zipcode": "10029"
+    },
+    {
+      "name": "Lower East Side",
+      "borough": "Manhattan",
+      "median": 140,
+      "mean": 157,
+      "count": 624,
+      "zipcode": "10002"
+    },
+    {
+      "name": "Astoria",
+      "borough": "Queens",
+      "median": 86,
+      "mean": 103,
+      "count": 614,
+      "zipcode": "11103"
+    },
+    {
+      "name": "Washington Heights",
+      "borough": "Manhattan",
+      "median": 74,
+      "mean": 94,
+      "count": 598,
+      "zipcode": "10032"
+    },
+    {
+      "name": "West Village",
+      "borough": "Manhattan",
+      "median": 200,
+      "mean": 242,
+      "count": 533,
+      "zipcode": "10014"
+    },
+    {
+      "name": "Financial District",
+      "borough": "Manhattan",
+      "median": 178,
+      "mean": 212,
+      "count": 429,
+      "zipcode": "10038"
+    },
+    {
+      "name": "Flatbush",
+      "borough": "Brooklyn",
+      "median": 70,
+      "mean": 89,
+      "count": 428,
+      "zipcode": "11226"
+    },
+    {
+      "name": "Clinton Hill",
+      "borough": "Brooklyn",
+      "median": 120,
+      "mean": 150,
+      "count": 396,
+      "zipcode": "11238"
+    },
+    {
+      "name": "Prospect-Lefferts Gardens",
+      "borough": "Brooklyn",
+      "median": 82,
+      "mean": 102,
+      "count": 389,
+      "zipcode": "11225"
+    },
+    {
+      "name": "Park Slope",
+      "borough": "Brooklyn",
+      "median": 145,
+      "mean": 167,
+      "count": 349,
+      "zipcode": "11215"
+    },
+    {
+      "name": "Long Island City",
+      "borough": "Queens",
+      "median": 95,
+      "mean": 118,
+      "count": 348,
+      "zipcode": "11101"
+    },
+    {
+      "name": "Murray Hill",
+      "borough": "Manhattan",
+      "median": 175,
+      "mean": 213,
+      "count": 331,
+      "zipcode": "10016"
+    },
+    {
+      "name": "Kips Bay",
+      "borough": "Manhattan",
+      "median": 160,
+      "mean": 192,
+      "count": 312,
+      "zipcode": "10016"
+    },
+    {
+      "name": "Fort Greene",
+      "borough": "Brooklyn",
+      "median": 125,
+      "mean": 151,
+      "count": 302,
+      "zipcode": "11205"
+    },
+    {
+      "name": "Sunset Park",
+      "borough": "Brooklyn",
+      "median": 79,
+      "mean": 107,
+      "count": 279,
+      "zipcode": "11232"
+    },
+    {
+      "name": "Flushing",
+      "borough": "Queens",
+      "median": 63,
+      "mean": 86,
+      "count": 275,
+      "zipcode": "11355"
+    },
+    {
+      "name": "Greenwich Village",
+      "borough": "Manhattan",
+      "median": 187,
+      "mean": 227,
+      "count": 273,
+      "zipcode": "10012"
+    },
+    {
+      "name": "Morningside Heights",
+      "borough": "Manhattan",
+      "median": 90,
+      "mean": 108,
+      "count": 271,
+      "zipcode": "10027"
+    },
+    {
+      "name": "East Flatbush",
+      "borough": "Brooklyn",
+      "median": 75,
+      "mean": 95,
+      "count": 269,
+      "zipcode": "11203"
+    },
+    {
+      "name": "Gramercy",
+      "borough": "Manhattan",
+      "median": 169,
+      "mean": 204,
+      "count": 266,
+      "zipcode": "10003"
+    },
+    {
+      "name": "Ridgewood",
+      "borough": "Queens",
+      "median": 65,
+      "mean": 80,
+      "count": 260,
+      "zipcode": "11385"
+    },
+    {
+      "name": "SoHo",
+      "borough": "Manhattan",
+      "median": 200,
+      "mean": 285,
+      "count": 250,
+      "zipcode": "10012"
+    },
+    {
+      "name": "Prospect Heights",
+      "borough": "Brooklyn",
+      "median": 120,
+      "mean": 141,
+      "count": 243,
+      "zipcode": "11238"
+    },
+    {
+      "name": "Chinatown",
+      "borough": "Manhattan",
+      "median": 130,
+      "mean": 160,
+      "count": 242,
+      "zipcode": "10002"
+    },
+    {
+      "name": "Ditmars Steinway",
+      "borough": "Queens",
+      "median": 78,
+      "mean": 95,
+      "count": 237,
+      "zipcode": "11105"
+    },
+    {
+      "name": "Nolita",
+      "borough": "Manhattan",
+      "median": 180,
+      "mean": 195,
+      "count": 236,
+      "zipcode": "10012"
+    },
+    {
+      "name": "Sunnyside",
+      "borough": "Queens",
+      "median": 77,
+      "mean": 92,
+      "count": 220,
+      "zipcode": "11104"
+    },
+    {
+      "name": "South Slope",
+      "borough": "Brooklyn",
+      "median": 135,
+      "mean": 144,
+      "count": 201,
+      "zipcode": "11215"
+    },
+    {
+      "name": "Gowanus",
+      "borough": "Brooklyn",
+      "median": 129,
+      "mean": 164,
+      "count": 177,
+      "zipcode": "11215"
+    },
+    {
+      "name": "Theater District",
+      "borough": "Manhattan",
+      "median": 204,
+      "mean": 256,
+      "count": 170,
+      "zipcode": "10036"
+    },
+    {
+      "name": "Elmhurst",
+      "borough": "Queens",
+      "median": 59,
+      "mean": 77,
+      "count": 166,
+      "zipcode": "11373"
+    },
+    {
+      "name": "Inwood",
+      "borough": "Manhattan",
+      "median": 73,
+      "mean": 87,
+      "count": 165,
+      "zipcode": "10034"
+    },
+    {
+      "name": "Carroll Gardens",
+      "borough": "Brooklyn",
+      "median": 150,
+      "mean": 177,
+      "count": 159,
+      "zipcode": "11231"
+    },
+    {
+      "name": "Woodside",
+      "borough": "Queens",
+      "median": 65,
+      "mean": 80,
+      "count": 144,
+      "zipcode": "11377"
+    },
+    {
+      "name": "Jackson Heights",
+      "borough": "Queens",
+      "median": 70,
+      "mean": 84,
+      "count": 139,
+      "zipcode": "11372"
+    },
+    {
+      "name": "Boerum Hill",
+      "borough": "Brooklyn",
+      "median": 150,
+      "mean": 177,
+      "count": 136,
+      "zipcode": "11217"
+    },
+    {
+      "name": "Jamaica",
+      "borough": "Queens",
+      "median": 65,
+      "mean": 96,
+      "count": 133,
+      "zipcode": "11434"
+    },
+    {
+      "name": "East New York",
+      "borough": "Brooklyn",
+      "median": 78,
+      "mean": 92,
+      "count": 132,
+      "zipcode": "11207"
+    },
+    {
+      "name": "Tribeca",
+      "borough": "Manhattan",
+      "median": 250,
+      "mean": 350,
+      "count": 129,
+      "zipcode": "10013"
+    },
+    {
+      "name": "Kensington",
+      "borough": "Brooklyn",
+      "median": 65,
+      "mean": 84,
+      "count": 108,
+      "zipcode": "11218"
+    },
+    {
+      "name": "East Elmhurst",
+      "borough": "Queens",
+      "median": 60,
+      "mean": 74,
+      "count": 104,
+      "zipcode": "11369"
+    },
+    {
+      "name": "Sheepshead Bay",
+      "borough": "Brooklyn",
+      "median": 85,
+      "mean": 98,
+      "count": 101,
+      "zipcode": "11229"
+    },
+    {
+      "name": "Brooklyn Heights",
+      "borough": "Brooklyn",
+      "median": 150,
+      "mean": 189,
+      "count": 100,
+      "zipcode": "11201"
+    },
+    {
+      "name": "Windsor Terrace",
+      "borough": "Brooklyn",
+      "median": 120,
+      "mean": 124,
+      "count": 100,
+      "zipcode": "11218"
+    },
+    {
+      "name": "Forest Hills",
+      "borough": "Queens",
+      "median": 82,
+      "mean": 121,
+      "count": 96,
+      "zipcode": "11375"
+    },
+    {
+      "name": "Little Italy",
+      "borough": "Manhattan",
+      "median": 138,
+      "mean": 164,
+      "count": 94,
+      "zipcode": "10013"
+    },
+    {
+      "name": "Borough Park",
+      "borough": "Brooklyn",
+      "median": 55,
+      "mean": 66,
+      "count": 92,
+      "zipcode": "11219"
+    },
+    {
+      "name": "Bay Ridge",
+      "borough": "Brooklyn",
+      "median": 84,
+      "mean": 104,
+      "count": 90,
+      "zipcode": "11209"
+    },
+    {
+      "name": "Midwood",
+      "borough": "Brooklyn",
+      "median": 70,
+      "mean": 82,
+      "count": 86,
+      "zipcode": "11230"
+    },
+    {
+      "name": "Cypress Hills",
+      "borough": "Brooklyn",
+      "median": 58,
+      "mean": 93,
+      "count": 85,
+      "zipcode": "11208"
+    },
+    {
+      "name": "Canarsie",
+      "borough": "Brooklyn",
+      "median": 79,
+      "mean": 96,
+      "count": 84,
+      "zipcode": "11236"
+    },
+    {
+      "name": "Cobble Hill",
+      "borough": "Brooklyn",
+      "median": 148,
+      "mean": 174,
+      "count": 78,
+      "zipcode": "11201"
+    },
+    {
+      "name": "Flatiron District",
+      "borough": "Manhattan",
+      "median": 212,
+      "mean": 302,
+      "count": 71,
+      "zipcode": "10010"
+    },
+    {
+      "name": "Maspeth",
+      "borough": "Queens",
+      "median": 70,
+      "mean": 86,
+      "count": 66,
+      "zipcode": "11378"
+    },
+    {
+      "name": "Richmond Hill",
+      "borough": "Queens",
+      "median": 65,
+      "mean": 86,
+      "count": 63,
+      "zipcode": "11419"
+    },
+    {
+      "name": "Rego Park",
+      "borough": "Queens",
+      "median": 69,
+      "mean": 80,
+      "count": 60,
+      "zipcode": "11374"
+    },
+    {
+      "name": "Roosevelt Island",
+      "borough": "Manhattan",
+      "median": 79,
+      "mean": 112,
+      "count": 60,
+      "zipcode": "10044"
+    },
+    {
+      "name": "Arverne",
+      "borough": "Queens",
+      "median": 108,
+      "mean": 157,
+      "count": 54,
+      "zipcode": "11692"
+    },
+    {
+      "name": "Woodhaven",
+      "borough": "Queens",
+      "median": 55,
+      "mean": 63,
+      "count": 54,
+      "zipcode": "11421"
+    },
+    {
+      "name": "Downtown Brooklyn",
+      "borough": "Brooklyn",
+      "median": 140,
+      "mean": 155,
+      "count": 53,
+      "zipcode": "11201"
+    },
+    {
+      "name": "NoHo",
+      "borough": "Manhattan",
+      "median": 230,
+      "mean": 261,
+      "count": 52,
+      "zipcode": "10003"
+    },
+    {
+      "name": "Two Bridges",
+      "borough": "Manhattan",
+      "median": 120,
+      "mean": 127,
+      "count": 50,
+      "zipcode": "10002"
+    },
+    {
+      "name": "Red Hook",
+      "borough": "Brooklyn",
+      "median": 115,
+      "mean": 145,
+      "count": 49,
+      "zipcode": "11231"
+    },
+    {
+      "name": "Rockaway Beach",
+      "borough": "Queens",
+      "median": 110,
+      "mean": 131,
+      "count": 48,
+      "zipcode": "11693"
+    },
+    {
+      "name": "Civic Center",
+      "borough": "Manhattan",
+      "median": 169,
+      "mean": 199,
+      "count": 47,
+      "zipcode": "10013"
+    },
+    {
+      "name": "Flatlands",
+      "borough": "Brooklyn",
+      "median": 85,
+      "mean": 96,
+      "count": 47,
+      "zipcode": "11234"
+    },
+    {
+      "name": "St. Albans",
+      "borough": "Queens",
+      "median": 60,
+      "mean": 98,
+      "count": 46,
+      "zipcode": "11412"
+    },
+    {
+      "name": "Brownsville",
+      "borough": "Brooklyn",
+      "median": 65,
+      "mean": 74,
+      "count": 45,
+      "zipcode": "11212"
+    },
+    {
+      "name": "Brighton Beach",
+      "borough": "Brooklyn",
+      "median": 82,
+      "mean": 97,
+      "count": 42,
+      "zipcode": "11235"
+    },
+    {
+      "name": "Fort Hamilton",
+      "borough": "Brooklyn",
+      "median": 92,
+      "mean": 98,
+      "count": 42,
+      "zipcode": "11209"
+    },
+    {
+      "name": "Springfield Gardens",
+      "borough": "Queens",
+      "median": 82,
+      "mean": 86,
+      "count": 42,
+      "zipcode": "11413"
+    },
+    {
+      "name": "Battery Park City",
+      "borough": "Manhattan",
+      "median": 200,
+      "mean": 250,
+      "count": 41,
+      "zipcode": "10280"
+    },
+    {
+      "name": "Kingsbridge",
+      "borough": "Bronx",
+      "median": 65,
+      "mean": 73,
+      "count": 41,
+      "zipcode": "10463"
+    },
+    {
+      "name": "Bensonhurst",
+      "borough": "Brooklyn",
+      "median": 74,
+      "mean": 77,
+      "count": 40,
+      "zipcode": "11214"
+    },
+    {
+      "name": "Gravesend",
+      "borough": "Brooklyn",
+      "median": 61,
+      "mean": 85,
+      "count": 40,
+      "zipcode": "11223"
+    },
+    {
+      "name": "Longwood",
+      "borough": "Bronx",
+      "median": 65,
+      "mean": 81,
+      "count": 40,
+      "zipcode": "10459"
+    },
+    {
+      "name": "Corona",
+      "borough": "Queens",
+      "median": 45,
+      "mean": 51,
+      "count": 38,
+      "zipcode": "11368"
+    },
+    {
+      "name": "Mott Haven",
+      "borough": "Bronx",
+      "median": 82,
+      "mean": 89,
+      "count": 38,
+      "zipcode": "10454"
+    },
+    {
+      "name": "South Ozone Park",
+      "borough": "Queens",
+      "median": 61,
+      "mean": 75,
+      "count": 38,
+      "zipcode": "11420"
+    },
+    {
+      "name": "Glendale",
+      "borough": "Queens",
+      "median": 75,
+      "mean": 78,
+      "count": 37,
+      "zipcode": "11385"
+    },
+    {
+      "name": "Concourse",
+      "borough": "Bronx",
+      "median": 70,
+      "mean": 82,
+      "count": 36,
+      "zipcode": "10451"
+    },
+    {
+      "name": "Briarwood",
+      "borough": "Queens",
+      "median": 60,
+      "mean": 75,
+      "count": 35,
+      "zipcode": "11435"
+    },
+    {
+      "name": "Ozone Park",
+      "borough": "Queens",
+      "median": 77,
+      "mean": 87,
+      "count": 34,
+      "zipcode": "11417"
+    },
+    {
+      "name": "Bayside",
+      "borough": "Queens",
+      "median": 76,
+      "mean": 104,
+      "count": 32,
+      "zipcode": "11364"
+    },
+    {
+      "name": "Port Morris",
+      "borough": "Bronx",
+      "median": 51,
+      "mean": 68,
+      "count": 32,
+      "zipcode": "10454"
+    },
+    {
+      "name": "Queens Village",
+      "borough": "Queens",
+      "median": 68,
+      "mean": 84,
+      "count": 30,
+      "zipcode": "11429"
+    }
+  ],
+  "roomTypes": [
+    {
+      "type": "Entire home / apt",
+      "avgPrice": 201,
+      "listings": 17532,
+      "share": 52.3
+    },
+    {
+      "type": "Private room",
+      "avgPrice": 85,
+      "listings": 15225,
+      "share": 45.4
+    },
+    {
+      "type": "Shared room",
+      "avgPrice": 74,
+      "listings": 765,
+      "share": 2.3
+    }
+  ]
+}

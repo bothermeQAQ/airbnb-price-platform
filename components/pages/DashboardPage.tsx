@@ -9,15 +9,16 @@ import { PriceHistogram } from '@/components/charts/PriceHistogram';
 import { TopNeighborhoods } from '@/components/charts/TopNeighborhoods';
 import { TierChart } from '@/components/charts/TierChart';
 import { XIcon } from '@/components/Icons';
-import { FAILED_EXPERIMENTS, PROJECT, TIER_STATS } from '@/lib/data';
+import { FAILED_EXPERIMENTS, MARKET_OVERALL, PROJECT, TIER_STATS } from '@/lib/data';
 
+// Real figures computed from train.csv (price > 0).
 const GLANCE = [
-  { label: 'Training rows', value: PROJECT.trainRows.toLocaleString() },
-  { label: 'Test rows', value: PROJECT.testRows.toLocaleString() },
+  { label: 'Listings analyzed', value: MARKET_OVERALL.n.toLocaleString() },
+  { label: 'Median price', value: `$${MARKET_OVERALL.median}` },
+  { label: 'Mean price', value: `$${MARKET_OVERALL.mean}` },
+  { label: '90th percentile', value: `$${MARKET_OVERALL.p90}` },
+  { label: 'Max price', value: `$${MARKET_OVERALL.max}` },
   { label: 'Raw columns', value: String(PROJECT.columns) },
-  { label: 'Mean price', value: `$${PROJECT.meanPrice}` },
-  { label: 'Median price', value: `$${PROJECT.medianPrice}` },
-  { label: 'Snapshot', value: PROJECT.snapshot },
 ];
 
 export function DashboardPage() {
@@ -32,8 +33,9 @@ export function DashboardPage() {
             The NYC short-let market.
           </h1>
           <p className="mt-3 max-w-2xl text-pretty leading-relaxed text-zinc-400">
-            Pricing geography, distribution and model performance — every figure traces
-            back to the {PROJECT.trainRows.toLocaleString()}-row training set.
+            Pricing geography, distribution and model performance — every figure below is
+            computed directly from the {MARKET_OVERALL.n.toLocaleString()} real training
+            listings.
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.06] sm:grid-cols-3 lg:grid-cols-6">
@@ -53,7 +55,7 @@ export function DashboardPage() {
       <Section
         eyebrow="Pricing geography"
         title="Average nightly price by borough"
-        sub="A stylized heatmap of the five boroughs. Hover to inspect — Manhattan commands a 2.6× premium over the Bronx."
+        sub="A stylized heatmap of the five boroughs, from real training data. Hover to inspect — Manhattan averages 2.3× the Bronx."
       >
         <BoroughMap />
       </Section>

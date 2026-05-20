@@ -1,0 +1,29 @@
+[   0.0s] Loading raw data + fitting feature preprocessor...
+[   2.7s] Builder fitted: 183 features, 14 categorical
+[   2.7s] Train matrix: (33522, 183), target=log1p(price), n=33522
+
+[   2.7s] === Training 12 base models (5-fold OOF + full refit) ===
+[ 296.5s]   lgb_l1                 OOF MAE=37.4563  n_est=2542
+[ 419.0s]   lgb_huber_a05_ff5      OOF MAE=37.0537  n_est=1081
+[ 509.2s]   lgb_huber_a09          OOF MAE=37.2708  n_est=951
+[ 677.7s]   lgb_huber_a03          OOF MAE=37.0805  n_est=1546
+[ 755.2s]   lgb_huber_a095         OOF MAE=37.2753  n_est=805
+[1015.2s]   lgb_quantile_a50       OOF MAE=37.4499  n_est=2874
+[1057.4s]   lgb_quantile_a90       OOF MAE=59.0556  n_est=442
+[1193.2s]   lgb_huber_weighted     OOF MAE=37.0489  n_est=1219
+[1254.8s]   xgb_mae                OOF MAE=37.4719  n_est=1378
+[1338.1s]   xgb_mae_d10            OOF MAE=37.4178  n_est=1551
+[1603.4s]   cb_mae                 OOF MAE=37.1452  n_est=1965
+[1650.4s]   hgb_absolute           OOF MAE=38.0083
+
+[1650.4s] === Ridge stacker ===
+[1650.5s]   best alpha=10  stacker OOF MAE=36.6153
+
+[1650.5s] === LGB-L1 residual correction ===
+[1654.1s]   residual n_est=196  shrink=0.85  OOF MAE=36.5299
+[1654.1s]   Jensen c=0.9988  ->  FINAL OOF MAE=36.5295
+
+[1654.1s] === Saving artifacts to saved_models/ ===
+[1654.6s] Saved: base_models.pkl stacker.pkl residual_model.pkl preprocessor.pkl target_encoders.pkl feature_cols.json
+
+[1654.6s] DONE. Final reconstruction OOF MAE = 36.5295  (36.18 CSV is the original fixed output; this is a faithful rebuild)
