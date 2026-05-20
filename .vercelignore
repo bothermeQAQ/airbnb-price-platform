@@ -1,0 +1,16 @@
+# Files the Next.js frontend build does not need — keeps the deploy upload
+# small and under Vercel's 100 MB per-file limit.
+#
+# NOTE: backend/market_data.json IS required (imported by lib/data.ts) and is
+# intentionally not excluded.
+
+saved_models
+backend/.venv
+backend/__pycache__
+backend/build_market_data.py
+**/__pycache__
+node_modules
+.next
+out
+*.csv
+TECHNICAL_SUMMARY.md
