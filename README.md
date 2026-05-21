@@ -134,12 +134,24 @@ npm run build        # static export → ./out
 
 ## Deployment
 
-- **Frontend** — Vercel (`vercel --prod`). Set `NEXT_PUBLIC_API_URL` to the
-  deployed backend URL.
-- **Backend** — `render.yaml` is a self-contained Render Blueprint. The 162 MB
-  `base_models.pkl` is published as a GitHub Release asset and downloaded
-  automatically at build time. Deploy via the Render dashboard → New →
-  Blueprint → this repo.
+### Backend → Render (one click)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/bothermeQAQ/airbnb-price-platform)
+
+The button reads `render.yaml` — a self-contained Blueprint. The 162 MB
+`base_models.pkl` is published as a GitHub Release asset and downloaded
+automatically at build time (no Git LFS, no manual steps).
+
+> **RAM note:** the model + inference stack needs roughly 0.6–0.8 GB resident.
+> Render's free/Starter instances are 512 MB and may OOM — pick a 2 GB
+> (Standard) instance if the service crashes on model load.
+
+After it is live, run `bash backend/verify_deploy.sh https://<your-service>.onrender.com`.
+
+### Frontend → Vercel
+
+`vercel --prod`. Set `NEXT_PUBLIC_API_URL` to the backend URL (already wired to
+`airbnb-price-api.onrender.com`); redeploy after changing it.
 
 ## Repository layout
 
