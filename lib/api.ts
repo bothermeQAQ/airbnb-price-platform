@@ -28,7 +28,8 @@ export const apiBaseUrl = API_BASE;
 export async function fetchPrediction(input: PredictInput): Promise<PredictionResult> {
   try {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 9000);
+    // Generous timeout: a free-tier backend may be doing a cold start.
+    const timer = setTimeout(() => controller.abort(), 20000);
     const res = await fetch(`${API_BASE}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
